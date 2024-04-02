@@ -190,7 +190,10 @@ namespace ProjectBlue.ArtNetRecorder
 
                 try
                 {
-                    using var udpClient = new UdpClient(ip);
+                    using var udpClient = new UdpClient();
+                    udpClient.ExclusiveAddressUse = false;
+                    udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress,true);
+                    udpClient.Client.Bind(ip);
 
                     Debug.Log("ArtNet Client Established");
 
